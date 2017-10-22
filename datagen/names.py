@@ -39,7 +39,7 @@ MAJORS = [
      'group': 'A'},
     {'name': 'Cơ khí',
      'group': 'A'},
-    {'name': 'Kĩ thuật hóa học',
+    {'name': 'Kỹ thuật hóa học',
      'group': 'A'},
     {'name': 'Quản trị kinh doanh',
      'group': 'A'},

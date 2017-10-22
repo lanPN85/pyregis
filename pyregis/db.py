@@ -20,3 +20,8 @@ def init_db():
     # noinspection PyUnresolvedReferences
     from . import models
     Model.metadata.create_all(bind=engine)
+
+
+def clear_db():
+    Model.metadata.drop_all(bind=engine)
+    init_db()
