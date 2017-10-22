@@ -1,11 +1,9 @@
 from argparse import ArgumentParser
-from flask import Flask
 
 import flask
 
+from pyregis import app
 from pyregis import api
-
-app = Flask(__name__)
 
 
 @app.route('/')
