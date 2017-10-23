@@ -62,6 +62,9 @@ def main(args):
         db.db_session.commit()
 
     print('\nGenerating %d students...' % args.COUNT)
+    # Precalculate random scores for better performance
+    A_SCORES = np.random.normal(args.LOC, args.SCALE, size=args.COUNT)
+    D_SCORES = np.random.normal(args.LOC, args.SCALE, size=args.COUNT)
     for i in range(args.COUNT):
         lastname = random.choice(tuple(names.LAST_NAMES))
 
@@ -70,15 +73,17 @@ def main(args):
             mid_cands.remove(lastname)
         middlename = random.choice(tuple(mid_cands))
 
-        first_cands = mid_cands.copy()
+        first_cands = names.FIRST_NAMES.copy()
+        if lastname in first_cands:
+            first_cands.remove(lastname)
         if middlename in first_cands:
             first_cands.remove(middlename)
         firstname = random.choice(tuple(first_cands))
         print('[%d] %s %s %s' % (i+1, lastname, middlename, firstname))
 
         # Random score drawn from normal distribution
-        a_score = min(30.0, max(1.0, np.random.normal(args.LOC, args.SCALE)))
-        d_score = min(30.0, max(1.0, np.random.normal(args.LOC, args.SCALE)))
+        a_score = min(30.0, max(1.0, A_SCORES[i]))
+        d_score = min(30.0, max(1.0, D_SCORES[i]))
         print('\tGroup A score: %.2f' % a_score)
         print('\tGroup D score: %.2f' % d_score)
 

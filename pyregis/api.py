@@ -123,6 +123,6 @@ def get_all_majors():
     return flask.jsonify(l)
 
 
-@app.route('/api/decide')
+@app.route('/api/decide', methods=['GET'])
 def get_decision():
     pass

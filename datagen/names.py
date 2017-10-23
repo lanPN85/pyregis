@@ -12,7 +12,20 @@ MIDDLE_NAMES = {
     'Văn', 'Thị', 'Đình', 'Ngọc',
     'Thành', 'Như', 'Chí', 'Đức',
     'Thanh', 'Thu', 'Xuân', 'Cẩm',
-    'Hồng', 'Hoàng', 'Đại', 'Đinh',
+    'Hồng', 'Hoàng', 'Cao', 'Trung',
+    'Anh', 'Kỳ', 'Nam', 'Tuấn',
+    'Tường', 'Phương', 'Huyền',
+    'Huy', 'Hồng', 'Lan',
+    'Lâm', 'Mạnh', 'Vân',
+    'Hương', 'Minh', 'Việt',
+    'Quang', 'Diệu', 'Quỳnh',
+}
+
+FIRST_NAMES = {
+    'Văn', 'Đình', 'Ngọc', 'Huyền',
+    'Thành', 'Như', 'Chí', 'Đức',
+    'Thanh', 'Thu', 'Xuân', 'Tú',
+    'Hồng', 'Hoàng', 'Đại', 'Nam',
     'Anh', 'Hạnh', 'Nhân', 'Kỳ',
     'Vinh', 'Linh', 'Chi', 'Ly',
     'Thảo', 'Phương', 'Trinh', 'Lân',
@@ -22,11 +35,9 @@ MIDDLE_NAMES = {
     'Hương', 'Minh', 'Đạt', 'Thịnh',
     'Vương', 'Long', 'Quang', 'Diệu',
     'Bảo', 'Trí', 'Trung', 'Quân',
-    'Quỳnh', 'Yến', 'An'
+    'Quỳnh', 'Yến', 'An', 'My',
+    'Lợi', 'Việt', 'Tuấn'
 }
-
-FIRST_NAMES = MIDDLE_NAMES.copy()
-FIRST_NAMES.remove('Thị')
 
 MAJORS = [
     {'name': 'CNTT-TT',
