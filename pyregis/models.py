@@ -14,6 +14,28 @@ class Student(Model):
 
     school_majors = relationship('Registration', back_populates='student')
 
+    def to_dict(self, include_regs=True):
+        d = {
+            'sid': self.sid,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'a_score': self.a_score,
+            'd_score': self.d_score
+        }
+
+        if include_regs:
+            reglist = self.school_majors
+            d['regs'] = []
+            for m in reglist:
+                major = m.school_major
+                d['regs'].append({
+                    'mid': major.mid,
+                    'smid': major.smid,
+                    'major_name': major.major.name,
+                    'school_name': major.school.name
+                })
+        return d
+
 
 class Registration(Model):
     __tablename__ = 'registrations'
@@ -44,6 +66,25 @@ class Major(Model):
 
     schools = relationship('SchoolMajor', back_populates='major')
 
+    def to_dict(self, include_schools=True):
+        d = {
+            'mid': self.mid,
+            'name': self.name
+        }
+
+        if include_schools:
+            d['schools'] = []
+            slist = self.schools
+            for s in slist:
+                school = s.school
+                d['schools'].append({
+                    'scid': school.scid,
+                    'name': school.name,
+                    'cutoff': s.cutoff
+                })
+
+        return d
+
 
 class School(Model):
     __tablename__ = 'schools'
@@ -52,4 +93,21 @@ class School(Model):
 
     majors = relationship('SchoolMajor', back_populates='school')
 
+    def to_dict(self, include_majors=True):
+        d = {
+            'scid': self.scid,
+            'name': self.name
+        }
 
+        if include_majors:
+            d['majors'] = []
+            mlist = self.majors
+            for m in mlist:
+                major = m.major
+                d['majors'].append({
+                    'mid': major.mid,
+                    'name': major.name,
+                    'cutoff': m.cutoff
+                })
+
+        return d
