@@ -19,6 +19,7 @@ def parse_arguments():
 
 
 def main(args):
+    api.init()
     app.run(host=args.HOST, port=args.PORT)
 
 

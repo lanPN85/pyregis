@@ -37,24 +37,29 @@ def main(args):
         print('[%d] %s' % (i+1, major['name']))
         print('\tGroup: %s' % major['group'])
         m_major = Major(name=major['name'], group=major['group'])
-        db.db_session.add(m_major)
+        if not args.TEST:
+            db.db_session.add(m_major)
 
-    db.db_session.commit()
+    if not args.TEST:
+        db.db_session.commit()
 
     print('\nInserting %d schools...' % len(names.SCHOOLS))
     for i, school in enumerate(names.SCHOOLS):
         print('[%d] %s' % (i+1, school['name']))
         m_school = School(name=school['name'])
-        db.db_session.add(m_school)
+        if not args.TEST:
+            db.db_session.add(m_school)
         for major in school['majors']:
             m_major = Major.query.filter_by(name=major['name']).first()
             cutoff = major['cutoff']
             m_sm = SchoolMajor(cutoff=cutoff)
             m_sm.major = m_major
             m_sm.school = m_school
-            db.db_session.add(m_sm)
+            if not args.TEST:
+                db.db_session.add(m_sm)
 
-    db.db_session.commit()
+    if not args.TEST:
+        db.db_session.commit()
 
     print('\nGenerating %d students...' % args.COUNT)
     for i in range(args.COUNT):
@@ -79,7 +84,9 @@ def main(args):
 
         m_student = Student(firstname=firstname, lastname='%s %s' % (lastname, middlename),
                             a_score=a_score, d_score=d_score)
-        db.db_session.add(m_student)
+
+        if not args.TEST:
+            db.db_session.add(m_student)
 
         reg_num = random.randint(1, 3)
         regs = []
@@ -102,9 +109,11 @@ def main(args):
 
             m_sm = SchoolMajor.query.filter_by(scid=scid, mid=mid).first()
             m_reg = Registration(school_major=m_sm, student=m_student)
-            db.db_session.add(m_reg)
+            if not args.TEST:
+                db.db_session.add(m_reg)
 
-    db.db_session.commit()
+    if not args.TEST:
+        db.db_session.commit()
 
 
 if __name__ == '__main__':
