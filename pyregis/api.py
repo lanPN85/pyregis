@@ -89,15 +89,40 @@ def search_majors():
 
 @app.route('/api/students/all', methods=['GET'])
 def get_all_students():
-    start_id = flask.request.args.get('start', 1)
-    count = flask.request.args.get('count', 20)
+    start_id = int(flask.request.args.get('start', 1))
+    count = int(flask.request.args.get('count', 20))
+
+    dbq = db.db_session.query(Student).filter(Student.sid >= start_id).order_by(Student.sid).limit(count)
+    results = dbq.all()
+
+    l = []
+    for r in results:
+        l.append(r.to_dict())
+    return flask.jsonify(l)
 
 
 @app.route('/api/schools/all', methods=['GET'])
 def get_all_schools():
-    pass
+    dbq = db.db_session.query(School)
+    results = dbq.all()
+
+    l = []
+    for r in results:
+        l.append(r.to_dict())
+    return flask.jsonify(l)
 
 
 @app.route('/api/majors/all', methods=['GET'])
 def get_all_majors():
+    dbq = db.db_session.query(Major)
+    results = dbq.all()
+
+    l = []
+    for r in results:
+        l.append(r.to_dict())
+    return flask.jsonify(l)
+
+
+@app.route('/api/decide')
+def get_decision():
     pass
