@@ -7,7 +7,6 @@ import os
 SQLITE_URL = 'sqlite:///' + os.path.abspath(os.getcwd() + '/data/pyregis.db')
 
 engine = create_engine(SQLITE_URL, convert_unicode=True)
-test_engine = create_engine('sqlite://', convert_unicode=True)
 
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,

@@ -4,56 +4,20 @@ from sqlalchemy.orm import relationship
 from .db import Model
 
 
-class Student(Model):
-    __tablename__ = 'students'
-    sid = Column(Integer, primary_key=True)
-    firstname = Column(String(64, convert_unicode=True))
-    lastname = Column(String(128, convert_unicode=True))
-    a_score = Column(Float)
-    d_score = Column(Float)
-
-    school_majors = relationship('Registration', back_populates='student')
-
-    def to_dict(self, include_regs=True):
-        d = {
-            'sid': self.sid,
-            'firstname': self.firstname,
-            'lastname': self.lastname,
-            'a_score': self.a_score,
-            'd_score': self.d_score
-        }
-
-        if include_regs:
-            reglist = self.school_majors
-            d['regs'] = []
-            for m in reglist:
-                major = m.school_major
-                d['regs'].append({
-                    'mid': major.mid,
-                    'smid': major.smid,
-                    'major_name': major.major.name,
-                    'school_name': major.school.name
-                })
-        return d
-
-
-class Registration(Model):
-    __tablename__ = 'registrations'
-    smid = Column(Integer, ForeignKey('school_majors.smid'), primary_key=True)
-    sid = Column(Integer, ForeignKey('students.sid'), primary_key=True)
-
-    school_major = relationship('SchoolMajor', back_populates='students')
-    student = relationship('Student', back_populates='school_majors')
+class Student:
+    def __init__(self, score, school_majors):
+        self.score = score
+        self.school_majors = school_majors
 
 
 class SchoolMajor(Model):
     __tablename__ = 'school_majors'
-    smid = Column(Integer, primary_key=True)
-    scid = Column(Integer, ForeignKey('schools.scid'))
-    mid = Column(Integer, ForeignKey('majors.mid'))
+    scid = Column(Integer, ForeignKey('schools.scid'), primary_key=True)
+    mid = Column(Integer, ForeignKey('majors.mid'), primary_key=True)
     cutoff = Column(Integer)
+    score_2016 = Column(Float)
+    score_2014 = Column(Float)
 
-    students = relationship('Registration', back_populates='school_major')
     school = relationship('School', back_populates='majors')
     major = relationship('Major', back_populates='schools')
 
@@ -90,6 +54,7 @@ class School(Model):
     __tablename__ = 'schools'
     scid = Column(Integer, primary_key=True)
     name = Column(String(256, convert_unicode=True))
+    ratio = Column(Float)
 
     majors = relationship('SchoolMajor', back_populates='school')
 

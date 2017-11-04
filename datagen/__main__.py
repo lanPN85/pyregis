@@ -2,26 +2,17 @@ from argparse import ArgumentParser
 from pyregis import db
 from pyregis.models import *
 
-import random
-import numpy as np
-
 from . import names
 
 
 def parse_arguments():
     parser = ArgumentParser()
 
-    parser.add_argument('-c', '--count', type=int, default=10000, dest='COUNT',
-                        help='The number of students to generate. Defaults to 10000.')
     parser.add_argument('--test', action='store_true', dest='TEST',
                         help='Toggles test mode, which only prints out data without affecting any database. '
                              'Overrides --clean.')
     parser.add_argument('--clean', action='store_true', dest='CLEAN',
                         help='Whether to delete all data before generating.')
-    parser.add_argument('--score-loc', dest='LOC', default=17.0, type=float,
-                        help='The mean for exam score distribution.')
-    parser.add_argument('--score-scale', dest='SCALE', default=6.0, type=float,
-                        help='The standard deviation for exam score distribution.')
 
     return parser.parse_args()
 
@@ -57,65 +48,6 @@ def main(args):
             m_sm.school = m_school
             if not args.TEST:
                 db.db_session.add(m_sm)
-
-    if not args.TEST:
-        db.db_session.commit()
-
-    print('\nGenerating %d students...' % args.COUNT)
-    # Precalculate random scores for better performance
-    A_SCORES = np.random.normal(args.LOC, args.SCALE, size=args.COUNT)
-    D_SCORES = np.random.normal(args.LOC, args.SCALE, size=args.COUNT)
-    for i in range(args.COUNT):
-        lastname = random.choice(tuple(names.LAST_NAMES))
-
-        mid_cands = names.MIDDLE_NAMES.copy()
-        if lastname in mid_cands:
-            mid_cands.remove(lastname)
-        middlename = random.choice(tuple(mid_cands))
-
-        first_cands = names.FIRST_NAMES.copy()
-        if lastname in first_cands:
-            first_cands.remove(lastname)
-        if middlename in first_cands:
-            first_cands.remove(middlename)
-        firstname = random.choice(tuple(first_cands))
-        print('[%d] %s %s %s' % (i+1, lastname, middlename, firstname))
-
-        # Random score drawn from normal distribution
-        a_score = min(30.0, max(1.0, A_SCORES[i]))
-        d_score = min(30.0, max(1.0, D_SCORES[i]))
-        print('\tGroup A score: %.2f' % a_score)
-        print('\tGroup D score: %.2f' % d_score)
-
-        m_student = Student(firstname=firstname, lastname='%s %s' % (lastname, middlename),
-                            a_score=a_score, d_score=d_score)
-
-        if not args.TEST:
-            db.db_session.add(m_student)
-
-        reg_num = random.randint(1, 3)
-        regs = []
-        school_cand = names.SCHOOLS.copy()
-        for j in range(reg_num):
-            r = {}
-            school = random.choice(school_cand)
-            r['school'] = school['name']
-            r['major'] = random.choice(school['majors'])['name']
-            regs.append(r)
-            school_cand.remove(school)
-
-        for r in regs:
-            print('\t%s: %s' % (r['school'], r['major']))
-            m_school = School.query.filter_by(name=r['school']).first()
-            m_major = Major.query.filter_by(name=r['major']).first()
-
-            scid = m_school.scid
-            mid = m_major.mid
-
-            m_sm = SchoolMajor.query.filter_by(scid=scid, mid=mid).first()
-            m_reg = Registration(school_major=m_sm, student=m_student)
-            if not args.TEST:
-                db.db_session.add(m_reg)
 
     if not args.TEST:
         db.db_session.commit()
