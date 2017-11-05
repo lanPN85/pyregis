@@ -43,6 +43,9 @@ def main(args):
         for major in school['majors']:
             m_major = Major.query.filter_by(name=major['name']).first()
             cutoff = major['cutoff']
+            s2014 = major['2014']
+            s2016 = major['2016']
+
             m_sm = SchoolMajor(cutoff=cutoff)
             m_sm.major = m_major
             m_sm.school = m_school

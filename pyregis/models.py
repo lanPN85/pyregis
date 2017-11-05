@@ -5,9 +5,14 @@ from .db import Model
 
 
 class Student:
-    def __init__(self, score, school_majors):
-        self.score = score
-        self.school_majors = school_majors
+    def __init__(self, scores, major, schools):
+        self.scores = scores
+        self.major = major
+        self.schools = schools
+
+    @classmethod
+    def from_dict(cls, d):
+        pass
 
 
 class SchoolMajor(Model):
@@ -16,10 +21,32 @@ class SchoolMajor(Model):
     mid = Column(Integer, ForeignKey('majors.mid'), primary_key=True)
     cutoff = Column(Integer)
     score_2016 = Column(Float)
-    score_2014 = Column(Float)
+    score_2015 = Column(Float)
+    double_subj = Column(String(8))
 
     school = relationship('School', back_populates='majors')
     major = relationship('Major', back_populates='schools')
+
+    def diff_2015(self, student_scores):
+        return self._score_diff(student_scores, self.score_2015, self.major.group, double=self.double_subj)
+
+    def diff_2016(self, student_scores):
+        return self._score_diff(student_scores, self.score_2016, self.major.group, double=self.double_subj)
+
+    @staticmethod
+    def _score_diff(student_scores, standard_score, group, double=None):
+        if group == 'A':
+            scores = [student_scores['math'], student_scores['phys'], student_scores['chem']]
+        elif group == 'D':
+            scores = [student_scores['math'], student_scores['lite'], student_scores['eng']]
+        else:
+            raise ValueError('Invalid group %s' % group)
+
+        total = sum(scores)
+        if double is not None:
+            total += student_scores[double]
+
+        return total - standard_score
 
 
 class Major(Model):
