@@ -18,13 +18,15 @@ class TopsisEngine(DecisionEngine):
 
         # Fill out table values
         for i, sc in enumerate(choices):
+            sm = list(filter(lambda m: m.mid == major.mid, sc.majors))[0]
+
             # Whether school was already selected
             if sc in selected:
                 table[i, 0] = 1.0
             # 2016 difference
-            table[i, 1] = sc.s_2016
+            table[i, 1] = sm.diff_2016(student.scores)
             # 2015 difference
-            table[i, 2] = sc.s_2015
+            table[i, 2] = sm.diff_2015(student.scores)
             # Tuition fee
             table[i, 3] = sc.fee
             # Compete ratio
