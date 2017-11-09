@@ -60,7 +60,8 @@ class Major(Model):
     def to_dict(self, include_schools=True):
         d = {
             'mid': self.mid,
-            'name': self.name
+            'name': self.name,
+            'group': self.group
         }
 
         if include_schools:
@@ -71,7 +72,10 @@ class Major(Model):
                 d['schools'].append({
                     'scid': school.scid,
                     'name': school.name,
-                    'cutoff': s.cutoff
+                    'cutoff': s.cutoff,
+                    'score_2016': s.score_2016,
+                    'score_2014': s.score_2014,
+                    'double_subj': s.double_subj
                 })
 
         return d
@@ -90,7 +94,10 @@ class School(Model):
     def to_dict(self, include_majors=True):
         d = {
             'scid': self.scid,
-            'name': self.name
+            'name': self.name,
+            'ratio': self.ratio,
+            'fee': self.fee,
+            'rank_score': self.rank_score
         }
 
         if include_majors:
@@ -101,7 +108,10 @@ class School(Model):
                 d['majors'].append({
                     'mid': major.mid,
                     'name': major.name,
-                    'cutoff': m.cutoff
+                    'cutoff': m.cutoff,
+                    'score_2016': m.score_2016,
+                    'score_2014': m.score_2014,
+                    'double_subj': m.double_subj
                 })
 
         return d
