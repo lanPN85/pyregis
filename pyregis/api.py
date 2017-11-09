@@ -1,3 +1,5 @@
+from logging import getLogger
+
 import flask
 
 from . import db
@@ -6,10 +8,16 @@ from .models import *
 from .engines import TopsisEngine
 
 
+_logger = None
+
+
 def init():
     """
     Call this on server start
     """
+    global _logger
+    _logger = getLogger(__name__)
+    _logger.debug('Initializing APIs...')
     db.init_db()
 
 
@@ -46,8 +54,10 @@ def search_majors():
         l = []
         for r in results:
             l.append(r.to_dict())
+        _logger.debug(l)
         return flask.jsonify(l)
-    except KeyError:
+    except KeyError as e:
+        _logger.error('Missing API argument', exc_info=True)
         return flask.abort(400)
 
 
@@ -59,6 +69,7 @@ def get_all_schools():
     l = []
     for r in results:
         l.append(r.to_dict())
+    _logger.debug(l)
     return flask.jsonify(l)
 
 
@@ -70,6 +81,7 @@ def get_all_majors():
     l = []
     for r in results:
         l.append(r.to_dict())
+    _logger.debug(l)
     return flask.jsonify(l)
 
 

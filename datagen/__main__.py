@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+
 from pyregis import db
 from pyregis.models import *
 
@@ -50,10 +51,10 @@ def main(args):
 
             cutoff = major['cutoff']
             s2014 = major['2014']
-            s2016 = major['2016']
+            s2015 = major['2015']
             double_subj = major.get('double_subj', None)
 
-            m_sm = SchoolMajor(cutoff=cutoff, score_2014=s2014, score_2016=s2016,
+            m_sm = SchoolMajor(cutoff=cutoff, score_2014=s2014, score_2015=s2015,
                                double_subj=double_subj)
             m_sm.major = m_major
             m_sm.school = m_school
