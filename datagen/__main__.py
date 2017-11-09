@@ -37,16 +37,24 @@ def main(args):
     print('\nInserting %d schools...' % len(names.SCHOOLS))
     for i, school in enumerate(names.SCHOOLS):
         print('[%d] %s' % (i+1, school['name']))
-        m_school = School(name=school['name'])
+        m_school = School(name=school['name'], ratio=school['ratio'], fee=school['fee'],
+                          rank_score=school['rank_score'])
         if not args.TEST:
             db.db_session.add(m_school)
         for major in school['majors']:
             m_major = Major.query.filter_by(name=major['name']).first()
+            if m_major is None:
+                raise ValueError("No major with name '%s'" % major['name'])
+
+            print('\t[%d] %s' % (m_major.mid, m_major.name))
+
             cutoff = major['cutoff']
             s2014 = major['2014']
             s2016 = major['2016']
+            double_subj = major.get('double_subj', None)
 
-            m_sm = SchoolMajor(cutoff=cutoff)
+            m_sm = SchoolMajor(cutoff=cutoff, score_2014=s2014, score_2016=s2016,
+                               double_subj=double_subj)
             m_sm.major = m_major
             m_sm.school = m_school
             if not args.TEST:

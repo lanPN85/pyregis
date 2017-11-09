@@ -21,8 +21,8 @@ class SchoolMajor(Model):
     mid = Column(Integer, ForeignKey('majors.mid'), primary_key=True)
     cutoff = Column(Integer)
     score_2016 = Column(Float)
-    score_2015 = Column(Float)
-    double_subj = Column(String(8))
+    score_2014 = Column(Float)
+    double_subj = Column(String(8), nullable=True)
 
     school = relationship('School', back_populates='majors')
     major = relationship('Major', back_populates='schools')
@@ -82,6 +82,8 @@ class School(Model):
     scid = Column(Integer, primary_key=True)
     name = Column(String(256, convert_unicode=True))
     ratio = Column(Float)
+    fee = Column(Float)
+    rank_score = Column(Float)
 
     majors = relationship('SchoolMajor', back_populates='school')
 
