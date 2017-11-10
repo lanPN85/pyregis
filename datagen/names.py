@@ -238,18 +238,6 @@ SCHOOLS = [
           'cutoff': 220, '2014': 29.0, '2015': 24.0, '2016': 32.5},
      ],
      'ratio': 1.8, 'fee': 0, 'rank_score': 85.3},
-    {'name': 'Đại học Khoa học Xã hội và Nhân văn',
-     'majors': [
-         {'name': 'Tiếng Anh',
-          'cutoff': 300, '2014': 26.0, '2015': 28.5, '2016': 35.25},
-         {'name': 'Tiếng Nhật',
-          'cutoff': 320, '2014': 25.5, '2015': 27.5, '2016': 35.5},
-         {'name': 'Tiếng Pháp',
-          'cutoff': 200, '2014': 25.5, '2015': 27.5, '2016': 34.25},
-         {'name': 'Tiếng Đức',
-          'cutoff': 220, '2014': 25.0, '2015': 26.5, '2016': 32.25},
-     ],
-     'ratio': 3.8, 'fee': 0, 'rank_score': 85.3},
     {'name': 'Đại học Công nghệ',
      'majors': [
          {'name': 'CNTT-TT',
