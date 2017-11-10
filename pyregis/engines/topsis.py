@@ -1,10 +1,12 @@
 import numpy as np
 
 from .base import DecisionEngine
+from . import utils
 
 
 class TopsisEngine(DecisionEngine):
-    _WEIGHTS = [0.15, 0.25, 0.15, 0.15, 0.1, 0.2]
+    # Selected | 2016 diff | 2015 diff | Tuition fee | Ratio | Ranking score | Cutoff
+    _WEIGHTS = [0.1, 0.2, 0.15, 0.15, 0.1, 0.25, 0.05]
 
     def __init__(self):
         super().__init__()
@@ -25,15 +27,17 @@ class TopsisEngine(DecisionEngine):
             if sc in selected:
                 table[i, 0] = 1.0
             # 2016 difference
-            table[i, 1] = sm.diff_2015(student.scores)
+            table[i, 1] = sm.diff_2016(student.scores)
             # 2015 difference
-            table[i, 2] = sm.diff_2014(student.scores)
+            table[i, 2] = sm.diff_2015(student.scores)
             # Tuition fee
             table[i, 3] = sc.fee
             # Compete ratio
             table[i, 4] = sc.ratio
             # School ranking score
             table[i, 5] = sc.rank_score
+            # Cutoff
+            table[i, 6] = sm.cutoff
 
         self._logger.debug('Initial state:\n%s' % table)
 
@@ -69,10 +73,25 @@ class TopsisEngine(DecisionEngine):
         C = sminus / (sstar + sminus)
         self._logger.debug('C\n%s' % C)
 
-        best_sstar = choices[np.argmin(sstar)]
-        best_sminus = choices[np.argmax(sminus)]
-        best_c = choices[np.argmax(C)]
-        self._logger.debug('Best S* [%d]\n%s' % (int(np.argmin(sstar)), best_sstar))
-        self._logger.debug('Best S- [%d]\n%s' % (int(np.argmax(sminus)), best_sminus))
-        self._logger.debug('Best C [%d]\n%s' % (int(np.argmax(C)), best_c))
+        best_sstar_idx = utils.k_argmin(sstar, len(selected))
+        best_sminus_idx = utils.k_argmax(sminus, len(selected))
+        best_c_idx = utils.k_argmax(C, len(selected))
+
+        best_sstar, db_sstar = [], []
+        best_sminus, db_sminus = [], []
+        best_c, db_c = [], []
+
+        for sstar_idx, sminus_idx, c_idx in zip(best_sstar_idx, best_sminus_idx, best_c_idx):
+            best_sstar.append(choices[sstar_idx])
+            db_sstar.append((sstar_idx, choices[sstar_idx]))
+
+            best_sminus.append(choices[sminus_idx])
+            db_sminus.append((sminus_idx, choices[sminus_idx]))
+
+            best_c.append(choices[c_idx])
+            db_c.append((c_idx, choices[c_idx]))
+
+        self._logger.debug('Best S*\n%s' % db_sstar)
+        self._logger.debug('Best S-\n%s' % db_sminus)
+        self._logger.debug('Best C\n%s' % db_c)
 

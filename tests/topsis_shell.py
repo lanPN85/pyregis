@@ -9,9 +9,12 @@ logging.basicConfig(level=logging.DEBUG, format='%(name)s:[%(levelname)s] %(mess
 
 e = TopsisEngine()
 m = Major.query.filter_by(name='CNTT-TT').first()
-s1 = School.query.filter_by(name='Viện Đại học Mở Hà Nội').first()
+s1 = School.query.filter_by(name='Đại học Bách Khoa Hà Nội').first()
+s2 = School.query.filter_by(name='Học Viện Công Nghệ Bưu Chính Viễn Thông').first()
+
 s = Student({
-    'math': 8, 'phys': 8, 'chem': 9.75,
+    'math': 10, 'phys': 8, 'chem': 7,
     'lit': 6.75, 'eng': 8.25
-}, m, [s1])
+}, m, [s1, s2])
+
 e.make_decision(s)

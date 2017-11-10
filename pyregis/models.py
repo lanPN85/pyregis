@@ -20,18 +20,18 @@ class SchoolMajor(Model):
     scid = Column(Integer, ForeignKey('schools.scid'), primary_key=True)
     mid = Column(Integer, ForeignKey('majors.mid'), primary_key=True)
     cutoff = Column(Integer)
+    score_2016 = Column(Float)
     score_2015 = Column(Float)
-    score_2014 = Column(Float)
     double_subj = Column(String(8), nullable=True)
 
     school = relationship('School', back_populates='majors')
     major = relationship('Major', back_populates='schools')
 
-    def diff_2014(self, student_scores):
-        return self._score_diff(student_scores, self.score_2014)
-
     def diff_2015(self, student_scores):
         return self._score_diff(student_scores, self.score_2015)
+
+    def diff_2016(self, student_scores):
+        return self._score_diff(student_scores, self.score_2016)
 
     def _score_diff(self, student_scores, standard_score):
         if self.major.group == 'A':
@@ -45,7 +45,7 @@ class SchoolMajor(Model):
         if self.double_subj is not None:
             total += student_scores[self.double_subj]
 
-        return total - standard_score
+        return min([total - standard_score, 2])
 
     def __repr__(self):
         return "SchoolMajor(school = '%s', major = '%s')" % (self.school.name, self.major.name)
@@ -75,8 +75,8 @@ class Major(Model):
                     'scid': school.scid,
                     'name': school.name,
                     'cutoff': s.cutoff,
+                    'score_2016': s.score_2016,
                     'score_2015': s.score_2015,
-                    'score_2014': s.score_2014,
                     'double_subj': s.double_subj
                 })
 
@@ -111,8 +111,8 @@ class School(Model):
                     'mid': major.mid,
                     'name': major.name,
                     'cutoff': m.cutoff,
+                    'score_2016': m.score_2016,
                     'score_2015': m.score_2015,
-                    'score_2014': m.score_2014,
                     'double_subj': m.double_subj
                 })
 
