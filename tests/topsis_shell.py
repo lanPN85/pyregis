@@ -13,8 +13,8 @@ s1 = School.query.filter_by(name='Đại học Bách Khoa Hà Nội').first()
 s2 = School.query.filter_by(name='Học Viện Công Nghệ Bưu Chính Viễn Thông').first()
 
 s = Student({
-    'math': 10, 'phys': 8, 'chem': 7,
-    'lit': 6.75, 'eng': 8.25
+    'math': 9, 'phys': 9, 'chem': 5,
+    'lite': 8.5, 'eng': 6.25
 }, m, [s1, s2])
 
 e.make_decision(s)

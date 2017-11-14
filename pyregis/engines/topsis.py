@@ -6,7 +6,7 @@ from . import utils
 
 class TopsisEngine(DecisionEngine):
     # Selected | 2016 diff | 2015 diff | Tuition fee | Ratio | Ranking score | Cutoff
-    _WEIGHTS = [0.1, 0.2, 0.15, 0.15, 0.1, 0.25, 0.05]
+    _WEIGHTS = [0.15, 0.2, 0.15, 0.1, 0.1, 0.25, 0.05]
 
     def __init__(self):
         super().__init__()
