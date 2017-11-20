@@ -12,7 +12,18 @@ class Student:
 
     @classmethod
     def from_dict(cls, d):
-        pass
+        scores = d['scores']
+        major = Major.query.filter_by(mid=d['mid']).first()
+        schools = []
+        for scid in d['scids']:
+            schools.append(School.query.filter_by(scid=scid).first())
+
+        s = Student(scores, major, schools)
+        return s
+
+    def __repr__(self):
+        return 'Student(scores = %s, major = \'%s\', schools = %s)' % \
+               (self.scores, self.major.name, list(map(lambda x: x.name, self.schools)))
 
 
 class SchoolMajor(Model):

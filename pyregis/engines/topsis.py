@@ -95,3 +95,7 @@ class TopsisEngine(DecisionEngine):
         self._logger.debug('Best S-\n%s' % db_sminus)
         self._logger.debug('Best C\n%s' % db_c)
 
+        schools = list(map(lambda x: x.school, best_c))
+        notes = []
+
+        return schools, notes

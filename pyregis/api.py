@@ -92,4 +92,19 @@ ENGINES = {
 
 @app.route('/api/decide', methods=['POST'])
 def get_decision():
-    pass
+    engine_name = flask.request.args.get('engine', 'topsis')
+    if engine_name not in ENGINES.keys():
+        flask.abort(404)
+
+    engine = ENGINES[engine_name]
+    st = flask.request.get_json()
+    student = Student.from_dict(st)
+
+    schools, notes = engine.make_decision(student)
+    sdicts = list(map(lambda x: x.to_dict(include_majors=False), schools))
+    result = {
+        'schools': sdicts,
+        'notes': notes
+    }
+
+    return flask.jsonify(result)
