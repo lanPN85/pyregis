@@ -49,6 +49,7 @@ class TopsisEngine(DecisionEngine):
         _divisor = np.clip(np.sqrt(np.sum(table ** 2, axis=0, keepdims=True)),
                            a_min=np.finfo(float).eps, a_max=float('inf'))
         table = table / _divisor
+        del _divisor
         self._logger.debug('Normalized:\n%s' % table)
 
         # Factor weights

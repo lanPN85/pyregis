@@ -5,7 +5,7 @@ import flask
 from . import db
 from . import app
 from .models import *
-from .engines import TopsisEngine
+from .engines import TopsisEngine, ElectreEngine
 
 
 _logger = None
@@ -86,7 +86,8 @@ def get_all_majors():
 
 
 ENGINES = {
-    'topsis': TopsisEngine()
+    'topsis': TopsisEngine(),
+    'electre': ElectreEngine()
 }
 
 
