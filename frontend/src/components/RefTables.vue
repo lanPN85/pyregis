@@ -9,7 +9,7 @@
 					<b-input-group>
 						<b-input-group-addon><icon name="search"></icon></b-input-group-addon>
 						<b-form-input type="text" placeholder="Tìm kiếm" v-model="schoolQuery"
-							v-on:keyup.enter.native="search('searchedSchools', 'schoolQuery', 'http://localhost:5000/api/schools/search')">
+							v-on:keyup.enter.native="search('searchedSchools', 'schoolQuery', '/api/schools/search')">
 						</b-form-input>
 						<b-input-group-addon>
 							<b-link href="#" v-on:click="resetSearch('searchedSchools', 'schoolQuery')">
@@ -40,7 +40,7 @@
 					<b-input-group>
 						<b-input-group-addon><icon name="search"></icon></b-input-group-addon>
 						<b-form-input type="text" placeholder="Tìm kiếm" v-model="majorQuery"
-							v-on:keyup.enter.native="search('searchedMajors', 'majorQuery', 'http://localhost:5000/api/majors/search')">
+							v-on:keyup.enter.native="search('searchedMajors', 'majorQuery', '/api/majors/search')">
 						</b-form-input>
 						<b-input-group-addon>
 							<b-link href="#" v-on:click="resetSearch('searchedMajors', 'majorQuery')">
@@ -79,15 +79,15 @@ export default {
 			schools: null,
 			schoolFields: {
 				name: {label: 'Tên trường'},
-				fee: {label: "Mức học phí"},
+				fee: {label: "Mức học phí (1 TC)"},
 				ratio: {label: "Tỉ lệ chọi"},
 				rank_score: {label: "Điểm xếp hạng"},
 				show_details: {label: "Hiện danh sách ngành"}
 			},
 			schoolMajorFields: {
 				name: {label: 'Ngành'},
-				score_2015: {label: 'Điểm thi 2015'},
-				score_2016: {label: 'Điểm thi 2016'},
+				score_2015: {label: 'Điểm chuẩn 2015'},
+				score_2016: {label: 'Điểm chuẩn 2016'},
 				cutoff: {label: 'Chỉ tiêu'},
 				group: {label: 'Khối'}
 			},
@@ -143,10 +143,10 @@ export default {
 	},
 	mounted() {
 		var component = this;
-		$.getJSON('http://localhost:5000/api/schools/all', function(data) {
+		$.getJSON('/api/schools/all', function(data) {
 			component.schools = data;
 		})
-		$.getJSON('http://localhost:5000/api/majors/all', function(data) {
+		$.getJSON('/api/majors/all', function(data) {
 			component.majors = data;
 		})
 	}

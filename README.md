@@ -6,8 +6,10 @@ HUST 20171
 git clone https://github.com/lanPN85/pyregis
 cd pyregis
 sudo pip3 install -r requirements.txt
-python3 -m datagen
 
 # Khởi động server
 python3 main.py
+
+# Refresh dữ liệu
+python3 -m datagen --clean
 ```

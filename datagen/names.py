@@ -59,7 +59,7 @@ SCHOOLS = [
          {'name': 'Công nghệ sinh học',
           'cutoff': 220, '2014': 20.5, '2015': 24.0, '2016': 25.0},
      ],
-     'ratio': 2.7, 'fee': 0, 'rank_score': 64.1},
+     'ratio': 2.7, 'fee': 185000, 'rank_score': 64.1},
     {'name': 'Đại học Kinh tế Quốc dân',
      'majors': [
          {'name': 'Quản trị kinh doanh',
@@ -77,7 +77,7 @@ SCHOOLS = [
          {'name': 'Tiếng Anh',  'double_subj': 'eng',
           'cutoff': 420, '2014': 29.0, '2015': 28.76, '2016': 32.5},
      ],
-     'ratio': 3.75, 'fee': 0, 'rank_score': 43.3},
+     'ratio': 3.75, 'fee': 290000, 'rank_score': 43.3},
     {'name': 'Học Viện Công Nghệ Bưu Chính Viễn Thông',
      'majors': [
          {'name': 'Quản trị kinh doanh',
@@ -93,7 +93,7 @@ SCHOOLS = [
          {'name': 'Cơ điện tử',
           'cutoff': 420, '2014': 17.50, '2015': 21.75, '2016': 22.5},
      ],
-     'ratio': 2.2, 'fee': 0, 'rank_score': 44.1},
+     'ratio': 2.2, 'fee': 395000, 'rank_score': 44.1},
     {'name': 'Đại học Xây dựng',
      'majors': [
          {'name': 'CNTT-TT',
@@ -105,7 +105,7 @@ SCHOOLS = [
          {'name': 'Kế toán',
           'cutoff': 350, '2014': 20.0, '2015': 20.5, '2016': 23.0},
      ],
-     'ratio': 1.8, 'fee': 0, 'rank_score': 52.9},
+     'ratio': 1.8, 'fee': 210000, 'rank_score': 52.9},
     {'name': 'Đại học Ngoại thương',
      'majors': [
          {'name': 'Quản trị kinh doanh',
@@ -125,7 +125,7 @@ SCHOOLS = [
          {'name': 'Tiếng Anh', 'double_subj': 'eng',
           'cutoff': 300, '2014': 30.0, '2015': 33.5, '2016': 32.0},
      ],
-     'ratio': 3.43, 'fee': 0, 'rank_score': 47.3},
+     'ratio': 3.43, 'fee': 400000, 'rank_score': 47.3},
     {'name': 'Đại học Thương mại',
      'majors': [
          {'name': 'Quản trị kinh doanh',
@@ -143,7 +143,7 @@ SCHOOLS = [
          {'name': 'Tiếng Anh', 'double_subj': 'eng',
           'cutoff': 300, '2014': 27.0, '2015': 30.08, '2016': 32.5},
      ],
-     'ratio': 4.47, 'fee': 0, 'rank_score': 43.4},
+     'ratio': 4.47, 'fee': 350000, 'rank_score': 43.4},
     {'name': 'Đại học Kinh doanh Công nghệ',
      'majors': [
          {'name': 'Quản trị kinh doanh',
@@ -159,7 +159,7 @@ SCHOOLS = [
          {'name': 'Tiếng Anh', 'double_subj': 'eng',
           'cutoff': 130, '2014': 17.0, '2015': 15.0, '2016': 28.5},
      ],
-     'ratio': 1.8, 'fee': 0, 'rank_score': None},
+     'ratio': 1.8, 'fee': 265000, 'rank_score': None},
     {'name': 'Học viện Ngân Hàng',
      'majors': [
          {'name': 'CNTT-TT',
@@ -175,7 +175,7 @@ SCHOOLS = [
          {'name': 'Tiếng Anh',
           'cutoff': 300, '2014': 19.5, '2015': 22.0, '2016': 23.25},
      ],
-     'ratio': 3.27, 'fee': 0, 'rank_score': 24.2},
+     'ratio': 3.27, 'fee': 190000, 'rank_score': 24.2},
     {'name': 'Học viện Tài Chính',
      'majors': [
          {'name': 'Quản trị kinh doanh',
@@ -193,7 +193,7 @@ SCHOOLS = [
          {'name': 'Kiểm toán',
           'cutoff': 200, '2014': 20.5, '2015': 23.5, '2016': 25.0},
      ],
-     'ratio': 5.87, 'fee': 0, 'rank_score': 36.0},
+     'ratio': 5.87, 'fee': 212000, 'rank_score': 36.0},
     {'name': 'Đại học Hà Nội',
      'majors': [
          {'name': 'Tiếng Anh', 'double_subj': 'eng',
@@ -205,7 +205,7 @@ SCHOOLS = [
          {'name': 'Tiếng Đức', 'double_subj': 'eng',
           'cutoff': 220, '2014': 31.75, '2015': 30.25, '2016': 35.0},
      ],
-     'ratio': 4.28, 'fee': 0, 'rank_score': 36.6},
+     'ratio': 4.28, 'fee': 310000, 'rank_score': 36.6},
     {'name': 'Viện Đại học Mở Hà Nội',
      'majors': [
          {'name': 'CNTT-TT',
@@ -225,7 +225,7 @@ SCHOOLS = [
          {'name': 'Tiếng Anh', 'double_subj': 'eng',
           'cutoff': 300, '2014': 20.0, '2015': 25.25, '2016': 25.0},
      ],
-     'ratio': 6.75, 'fee': 0, 'rank_score': None},
+     'ratio': 6.75, 'fee': 210000, 'rank_score': None},
     {'name': 'Đại học Ngoại ngữ',
      'majors': [
          {'name': 'Tiếng Anh', 'double_subj': 'eng',
@@ -237,7 +237,7 @@ SCHOOLS = [
          {'name': 'Tiếng Đức', 'double_subj': 'eng',
           'cutoff': 220, '2014': 29.0, '2015': 24.0, '2016': 32.5},
      ],
-     'ratio': 1.8, 'fee': 0, 'rank_score': 85.3},
+     'ratio': 1.8, 'fee': 200000, 'rank_score': 85.3},
     {'name': 'Đại học Công nghệ',
      'majors': [
          {'name': 'CNTT-TT',
@@ -255,7 +255,7 @@ SCHOOLS = [
          {'name': 'Công nghệ sinh học',
           'cutoff': 250, '2014': 18.0, '2015': 20.5, '2016': 19.0},
      ],
-     'ratio': 4.66, 'fee': 0, 'rank_score': 85.3},
+     'ratio': 4.66, 'fee': 238000, 'rank_score': 85.3},
     {'name': 'Đại học Thăng Long',
      'majors': [
          {'name': 'CNTT-TT',
@@ -265,7 +265,7 @@ SCHOOLS = [
          {'name': 'Tiếng Nhật', 'double_subj': 'eng',
           'cutoff': 320, '2014': 14.0, '2015': 15.0, '2016': 18.0},
      ],
-     'ratio': 2.8, 'fee': 0, 'rank_score': None},
+     'ratio': 2.8, 'fee': 340000, 'rank_score': None},
     {'name': 'Học viện Kĩ thuật Quân sự',
      'majors': [
          {'name': 'CNTT-TT',
@@ -279,5 +279,5 @@ SCHOOLS = [
          {'name': 'Cơ điện tử',
           'cutoff': 380, '2014': 18.5, '2015': 19.75, '2016': 22.0},
      ],
-     'ratio': 3.8, 'fee': 0, 'rank_score': None}
+     'ratio': 3.8, 'fee': 225000, 'rank_score': None}
 ]

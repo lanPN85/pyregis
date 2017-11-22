@@ -5,7 +5,7 @@
 		<label for="major">Chọn ngành đăng ký:</label>
 		<b-form-select id="major" v-model="selectedMajor" :options="majorOptions"></b-form-select>
 		<p></p>
-		
+
 		<label v-if="subjects.length > 0">Điểm thi:</label>
 		<b-input-group :left="subj.name" right="/10"
 			v-for="subj in subjects" :key="subj.key">
@@ -16,13 +16,17 @@
 		<label v-if="selectedSchoolOptions.length > 0">Đánh dấu các trường đã đăng kí: (ít nhất 1 trường)</label>
 		<b-form-select multiple v-model="selectedSchools" v-if="selectedSchoolOptions.length > 0"
 			:options="selectedSchoolOptions" :select-size="5"></b-form-select>
-		<p></p>	
+		<p></p>
 	</b-form>
-	
+
 	<b-button block variant="success" :disabled="!scoresFilled || selectedSchools.length <= 0"
 		v-on:click="fetchResults">
 		Gửi thông tin & Nhận kết quả
 	</b-button>
+
+	<div id="loadBar" v-if="isLoading">
+		<p class="text-center"><icon name="circle-o-notch" spin></icon> Đang tải</p>
+	</div>
 
 	<div id="decision-pane" v-if="decision">
 		<p></p>
@@ -35,6 +39,7 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/circle-o-notch'
 import $ from 'jquery'
 
 export default {
@@ -52,8 +57,11 @@ export default {
 			decisionFields: {
 				name: {label: 'Trường'},
 				score_2015: {label: 'Điểm 2015'},
-				score_2016: {label: 'Điểm 2016'}
-			}
+				score_2016: {label: 'Điểm 2016'},
+        		cutoff: {label: 'Chỉ tiêu'},
+        		notes: {label: 'Ghi chú'}
+			},
+			isLoading: false
 		}
 	},
 	computed: {
@@ -67,8 +75,8 @@ export default {
 		},
 		selectedSchoolOptions() {
 			if (!this.selectedMajor) return [];
-			var res = [];
-			for (var i=0; i<this.selectedMajor.schools.length; i++) {
+      let res = [];
+      for (let i=0; i<this.selectedMajor.schools.length; i++) {
 				res.push({text: this.selectedMajor.schools[i].name, value: this.selectedMajor.schools[i]});
 			}
 			return res;
@@ -107,12 +115,39 @@ export default {
 			return score >= 0 && score <= 10;
 		},
 		fetchResults() {
+			this.isLoading = true;
+			this.decision = null;
+			const component = this;
 
+			let scid = [];
+			for (let i=0; i<this.selectedSchools.length; i++) {
+				scid.push(this.selectedSchools[i].scid);
+			}
+
+				let info = {
+				mid: this.selectedMajor.mid,
+				scids: scid,
+				scores: this.majorScores,
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: '/api/decide',
+				dataType: 'json',
+				contentType: 'application/json',
+				data: JSON.stringify(info),
+				success: function (data) {
+					setTimeout(function(){
+						component.decision = data;
+						component.isLoading = false
+					}, 500)
+				}
+			})
 		}
 	},
 	mounted() {
-		var component = this;
-		$.getJSON('http://localhost:5000/api/majors/all', function(data){
+		const component = this;
+		$.getJSON('/api/majors/all', function(data){
 			component.majors = data;
 		});
 	}
@@ -130,5 +165,9 @@ export default {
 #decison-pane {
 	margin-top: 10px;
 	padding-top: 10px;
+}
+
+#loadBar {
+	margin-top: 5px;
 }
 </style>
