@@ -30,7 +30,9 @@ class TopsisEngine(TableBasedEngine):
         self._logger.debug('S-\n%s' % sminus)
 
         # Calculate similarity index
-        C = sminus / (sstar + sminus)
+        _divisor = np.clip(sstar + sminus, a_min=np.finfo(float).eps,
+                           a_max=float('inf'))
+        C = sminus / _divisor
         self._logger.debug('C\n%s' % C)
 
         best_sstar_idx = utils.k_argmin(sstar, len(selected))
@@ -55,7 +57,7 @@ class TopsisEngine(TableBasedEngine):
         self._logger.debug('Best S-\n%s' % db_sminus)
         self._logger.debug('Best C\n%s' % db_c)
 
-        schools = list(map(lambda x: x.school, best_c))
-        notes = []
+        # schools = list(map(lambda x: x.school, best_c))
+        schools = best_c
 
-        return schools, notes
+        return schools

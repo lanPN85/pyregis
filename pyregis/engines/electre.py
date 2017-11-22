@@ -69,12 +69,12 @@ class ElectreEngine(TableBasedEngine):
                 K.append(i)
         self._logger.debug('Advantages:\n%s' % adv)
 
-        notes = []
         schools = []
         sdb = []
         for k in K:
-            schools.append(choices[k].school)
+            # schools.append(choices[k].school)
+            schools.append(choices[k])
             sdb.append((k, choices[k]))
         self._logger.debug('Choices:\n%s' % sdb)
 
-        return schools, notes
+        return schools

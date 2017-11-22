@@ -13,6 +13,9 @@ class Student:
     @classmethod
     def from_dict(cls, d):
         scores = d['scores']
+        for k, v in scores.items():
+            scores[k] = int(v) if v is not None else None
+
         major = Major.query.filter_by(mid=d['mid']).first()
         schools = []
         for scid in d['scids']:
@@ -60,6 +63,18 @@ class SchoolMajor(Model):
 
     def __repr__(self):
         return "SchoolMajor(school = '%s', major = '%s')" % (self.school.name, self.major.name)
+
+    def to_dict(self, notes=''):
+        d = {
+            'cutoff': self.cutoff,
+            'score_2015': self.score_2015,
+            'score_2016': self.score_2016,
+            'scid': self.school.scid,
+            'name': self.school.name,
+            'notes': notes
+        }
+
+        return d
 
 
 class Major(Model):
