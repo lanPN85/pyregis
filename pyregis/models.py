@@ -85,10 +85,12 @@ class Major(Model):
                 d['schools'].append({
                     'scid': school.scid,
                     'name': school.name,
+                    'rank_score': school.rank_score,
                     'cutoff': s.cutoff,
                     'score_2016': s.score_2016,
                     'score_2015': s.score_2015,
-                    'double_subj': s.double_subj
+                    'double_subj': s.double_subj,
+                    'ratio': school.ratio
                 })
 
         return d
@@ -122,6 +124,7 @@ class School(Model):
                     'mid': major.mid,
                     'name': major.name,
                     'cutoff': m.cutoff,
+                    'group': major.group,
                     'score_2016': m.score_2016,
                     'score_2015': m.score_2015,
                     'double_subj': m.double_subj

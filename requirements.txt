@@ -1,3 +1,4 @@
 sqlalchemy
 flask
 numpy
+flask-cors

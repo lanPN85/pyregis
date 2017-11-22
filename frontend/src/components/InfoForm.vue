@@ -1,48 +1,59 @@
 <template>
 <div id="info-form">
-    <h2>Thông tin thí sinh</h2>
+    <h2><b>Thông tin thí sinh</b></h2>
 	<b-form>
 		<label for="major">Chọn ngành đăng ký:</label>
 		<b-form-select id="major" v-model="selectedMajor" :options="majorOptions"></b-form-select>
 		<p></p>
 		
-		<label>Điểm thi:</label>
+		<label v-if="subjects.length > 0">Điểm thi:</label>
 		<b-input-group :left="subj.name" right="/10"
 			v-for="subj in subjects" :key="subj.key">
 			<b-input type="number" v-model="majorScores[subj.key]" placeholder="Nhập điểm thi"></b-input>
 		</b-input-group>
 		<p></p>
 
-		<label>Đánh dấu các trường đã đăng kí:</label>
-		<b-form-select multiple v-model="selectedSchools" 
+		<label v-if="selectedSchoolOptions.length > 0">Đánh dấu các trường đã đăng kí: (ít nhất 1 trường)</label>
+		<b-form-select multiple v-model="selectedSchools" v-if="selectedSchoolOptions.length > 0"
 			:options="selectedSchoolOptions" :select-size="5"></b-form-select>
 		<p></p>	
 	</b-form>
 	
-	<b-button block variant="success" :disabled="!scoresFilled">Gửi thông tin & Nhận kết quả</b-button>
+	<b-button block variant="success" :disabled="!scoresFilled || selectedSchools.length <= 0"
+		v-on:click="fetchResults">
+		Gửi thông tin & Nhận kết quả
+	</b-button>
 
-	<div v-if="resultSchools">
-
+	<div id="decision-pane" v-if="decision">
+		<p></p>
+		<h2><b>Kết quả</b></h2>
+		<p>Nên điều chỉnh đăng ký sang các trường sau:</p>
+		<b-table :items="decision.schools" :fields="decisionFields">
+		</b-table>
 	</div>
 </div>
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
 	name: 'InfoForm',
 	data() {
 		return {
-			majors: [
-				{name: 'A', group: 'D', schools: [{scid: 1, name: 'DHBKHN'}]}, 
-				{name: 'B', group: 'A', schools: [{scid: 2, name: 'DHQG'}]}
-			],
+			majors: null,
 			selectedMajor: null,
 			majorScores: {
 				math: null, phys: null, chem: null,
 				lite: null, eng: null
 			},
 			selectedSchools: [],
-			resultSchools: null
+			decision: null,
+			decisionFields: {
+				name: {label: 'Trường'},
+				score_2015: {label: 'Điểm 2015'},
+				score_2016: {label: 'Điểm 2016'}
+			}
 		}
 	},
 	computed: {
@@ -94,7 +105,16 @@ export default {
 	methods: {
 		isValidScore(score) {
 			return score >= 0 && score <= 10;
+		},
+		fetchResults() {
+
 		}
+	},
+	mounted() {
+		var component = this;
+		$.getJSON('http://localhost:5000/api/majors/all', function(data){
+			component.majors = data;
+		});
 	}
 }
 </script>
@@ -104,5 +124,11 @@ export default {
 	background-color: #f1f1f1;
 	min-height: 90vh;
 	padding: 10px;
+	overflow-y: scroll;
+}
+
+#decison-pane {
+	margin-top: 10px;
+	padding-top: 10px;
 }
 </style>
