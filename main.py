@@ -3,7 +3,6 @@ from flask import Flask
 from logging import getLogger
 
 import flask
-from flask_cors import CORS
 import logging
 
 from pyregis import db
@@ -27,7 +26,6 @@ def parse_arguments():
 
 
 def main(args):
-    CORS(app, resources={r'/api/*': {'origins': '*'}})
     loglevel = logging.DEBUG if args.DEBUG else logging.INFO
     logging.basicConfig(level=loglevel, format='%(name)s:[%(levelname)s] %(message)s')
 
